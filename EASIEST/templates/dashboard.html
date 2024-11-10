@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+
+{% endblock %}
+
+
+
+{% block body %}
+
+<h1 id='doctor_valid_status'style="text-align: center">Patients List</h1>
+
+<div class="row dashboard_row">
+    <div class="left-align">
+        <button class="btn btn-main-2 btn-icon btn-round-full" id="myBtn">Add patient</button>
+        <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+            <span class="close" id="first">&times;</span>
+            <div class="new_patient_form">
+                <form method="POST" action="">
+                    {{form.hidden_tag()}}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">New patient</legend>
+                        <div class = form-group">
+                                    {{form.Name.label(class="form-control-label")}}
+
+                                    {% if form.Name.errors %}
+                                        {{ form.Name(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.Name.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.Name(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </div>
+                                <div class = form-group">
+                                    {{form.Surname.label(class="form-control-label")}}
+
+                                    {% if form.Surname.errors %}
+                                        {{ form.Surname(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.Surname.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.Surname(class="form-control form-control-lg") }}
+                                    {% endif %}
+
+                                </div>
+                                <div class = form-group">
+                                    {{form.Tel.label(class="form-control-label")}}
+
+                                    {% if form.Tel.errors %}
+                                        {{ form.Tel(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.Tel.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.Tel(class="form-control form-control-lg") }}
+                                    {% endif %}
+
+                                </div>
+                            </fieldset>
+                            <div class = form-group">
+                                    {{form.Submit(class="btn btn-main-2 btn-icon btn-round-full")}}
+                            </div>
+                </form>
+
+
+            </div>
+      </div>
+
+    </div>
+        <div class="search-container" >
+        <div class="d-flex">
+            <input type="text" id="keywords" placeholder="Keyword" class="form-control">
+            <button class="btn btn-main-2 btn-icon btn-round-full" type="submit" id="SearchRequest" value="Search" class="btn btn-outline-info">Search</button>
+        </div>
+</div>
+    </div>
+
+    <div class="right-align">
+        <p class="info-message">Please be aware:</p>
+        <p class="info-message">The 1st model's accuracy is 70%</p>
+        <p class="info-message">The 2nd model's accuracy is 87%</p>
+    </div>
+</div>
+
+
+<div class="table">
+
+    {% if patients|length < 1 %}
+    <h4 style="text-align: center">There are no patients.</h4>
+    {% else %}
+
+
+    <table class="patients_table" id="patient_table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Phone Number</th>
+                <th>Test Id</th>
+                <th>Date</th>
+                <th>Result</th>
+                <th>Accuracy</th>
+                <th>Operation</th>
+            </tr>
+        </thead>
+        <tbody class="table-hover">
+            {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.surname }}</td>
+                    <td>{{ patient.phonenum }}</td>
+                    <td>{{ tests[patient.name].id }}</td>
+                    <td>{{ patient.date.strftime('%d.%m.%Y') }}</td>
+                    {% if tests[patient.name].result == 0 %}
+                        <td>Not ASD</td>
+                    {% elif tests[patient.name].result == 1 %}
+                        <td>ASD</td>
+                    {% else %}
+                        <td>Not tested</td>
+                    {% endif %}
+                    <td>{{ tests[patient.name].Accuracy}}</td>
+                    <td>
+                        <a href="/delete/{{patient.id}}" id="deleteLink">Delete</a>
+                        <br>
+                        <a href="/calibration/{{tests[patient.name].id}}" id="startLink">Start</a>
+                        <br>
+                        <a href="/create_new_test/{{patient.id}}" id="createLink">Create New Test</a>
+                        <br>
+                        <a href="/patient_history/{{patient.id}}" id="patient_history">History</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <br>
+    {% endif %}
+</div>
+
+<script>
+var modal = document.getElementById("myModal");
+var btn = document.getElementById("myBtn");
+var span = document.getElementById("first");
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+span.onclick = function() {
+  modal.style.display = "none";
+}
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+var btn_first_name = document.getElementById("SearchRequest");
+var searchModal = document.getElementById("keywords");
+
+btn_first_name.onclick = function() {
+    var searchValue = searchModal.value;
+    fetch('/search', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ keywords: searchValue }),
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log(data)
+        // Create a new temporary div element to hold the response data
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = data;
+
+        // Get the table body content from the temporary div
+        var tableBodyContent = tempDiv.querySelector('.table tbody').innerHTML;
+
+        // Update the HTML content of the table body with the search results
+        document.querySelector('.table tbody').innerHTML = tableBodyContent;
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+</script>
+
+{% endblock %}

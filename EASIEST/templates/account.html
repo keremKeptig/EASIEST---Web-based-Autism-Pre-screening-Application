@@ -1,0 +1,454 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .doctor-info {
+            margin-bottom: 20px;
+        }
+        .doctor-info table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .doctor-info table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .doctor-info table td:first-child {
+            font-weight: bold;
+            width: 30%;
+        }
+        .patients-list {
+            margin-bottom: 20px;
+        }
+        .patients-list h2 {
+            color: #333;
+        }
+        .patient {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        td{
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+
+{% endblock %}
+
+
+
+{% block body %}
+
+<div class="container">
+        <h1>Doctor Information</h1>
+        <div class="doctors_form">
+
+        </div>
+        <div class="doctor-info">
+            <h2>Doctor Details</h2>
+            <table>
+                <tr id="Name">
+                    <td>Name:</td>
+                    <td>
+                        <p id="current_name">{{ doctor.name }}</p>
+                        <input id="new_name" style="display: none" type="text" name="new_input_name" placeholder="{{doctor.name}}"/></p>
+                    </td>
+                    <td>
+                        <button class="btn btn-main-2 btn-icon btn-round-full" id="Name_update">Update</button>
+                        <button class="btn btn-main-2 btn-icon btn-round-full" style="display: none" id="Upadet_button_name" >Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Surname:</td>
+                    <td>
+                        <p id="current_surname">{{ doctor.surname }}</p>
+                        <input id="new_surname" style="display: none"; type="text" name="new_input_name" placeholder="{{doctor.surname}}"/></p>
+                    </td>
+                    <td>
+                        <button class="btn btn-main-2 btn-icon btn-round-full" id="surname_update">Update</button>
+                        <button class="btn btn-main-2 btn-icon btn-round-full" style="display: none" id="Upadet_button_surname" >Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Username:</td>
+                    <td>
+                        <p id="current_username">{{ doctor.username }}</p>
+                        <input id="new_username" style="display: none" type="text" name="new_input_username" placeholder="{{doctor.username}}"/></p>
+                    </td>
+                    <td>
+                        <button class="btn btn-main-2 btn-icon btn-round-full" id="username_update">Update</button>
+                        <button class="btn btn-main-2 btn-icon btn-round-full" style="display: none" id="Upadet_button_username" >Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td>
+                        <p id="current_email">{{ doctor.email }}</p>
+                        <input id="new_email" style="display: none" type="text" name="new_input_email" placeholder="{{doctor.email}}"/></p>
+                    </td>
+                    <td>
+                        <button class="btn btn-main-2 btn-icon btn-round-full" id="email_update">Update</button>
+                        <button class="btn btn-main-2 btn-icon btn-round-full" style="display: none" id="Upadet_button_email" >Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Phone Number:</td>
+                    <td>
+                        <p id="current_p_num">{{ doctor.phonenum }}</p>
+                        <input id="new_p_num" style="display: none" type="text" name="new_input_p_num" placeholder="{{doctor.phonenum}}"/></p>
+                    </td>
+                    <td>
+                        <button class="btn btn-main-2 btn-icon btn-round-full" id="p_num_update">Update</button>
+                        <button class="btn btn-main-2 btn-icon btn-round-full" style="display: none" id="Upadet_button_p_num" >Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td>
+                        <p id="current_adress">{{ doctor.adress }}</p>
+                        <input id="new_adress" style="display: none" type="text" name="new_input_adress" placeholder="{{doctor.adress}}"/></p>
+                    </td>
+                    <td>
+                    <button class="btn btn-main-2 btn-icon btn-round-full" id="adress_update">Update</button>
+                    <button class="btn btn-main-2 btn-icon btn-round-full" style="display: none" id="Upadet_button_adress" >Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hospital:</td>
+                    <td>
+                        <p id="current_hospital_name">{{ doctor.hospital_name }}</p>
+                        <input id="new_hospital_name" style="display: none" type="text" name="new_input_hospital_name" placeholder="{{doctor.hospital_name}}"/></p>
+                    </td>
+                    <td>
+                        <button class="btn btn-main-2 btn-icon btn-round-full" id="hospital_name_update">Update</button>
+                        <button class="btn btn-main-2 btn-icon btn-round-full" style="display: none" id="Upadet_button_hospital_name" method="POST" action="/update_doctors_hospital_name">Update</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="patients-list">
+            <h2>Patients</h2>
+            {% for patient in doctor.patients %}
+            <div class="patient">
+                <h3>{{ patient.name }} {{ patient.surname }}</h3>
+                <p>Phone: {{ patient.phonenum }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+<script>
+    var btn_first_name = document.getElementById("Name_update");
+    var btn_second_name = document.getElementById("Upadet_button_name");
+    var modal = document.getElementById("current_name");
+    var form = document.getElementById("new_name");
+    btn_first_name.onclick = function() {
+        btn_first_name.style.display= "none";
+        btn_second_name.style.display="initial";
+        modal.style.display = "none";
+        form.style.display = "initial";
+    }
+    btn_second_name.onclick = function() {
+    var newName = form.value;
+    fetch('/update_name', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newName }),
+    })
+    .then(response => response.text())
+    .then(data => {
+        modal.textContent = newName;
+        btn_first_name.style.display= "inline-table";
+        btn_second_name.style.display="none";
+        modal.style.display = "inline-table";
+        form.style.display = "none";
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+    var btn_first_surname = document.getElementById("surname_update");
+    var btn_second_surname = document.getElementById("Upadet_button_surname");
+    var modal_surname = document.getElementById("current_surname");
+    var form_surname = document.getElementById("new_surname");
+    btn_first_surname.onclick = function() {
+        btn_first_surname.style.display= "none";
+        btn_second_surname.style.display="initial";
+        modal_surname.style.display = "none";
+        form_surname.style.display = "initial";
+    }
+
+    btn_second_surname.onclick = function() {
+    var newsurName = form_surname.value;
+    fetch('/update_surname', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newsurName }),
+    })
+    .then(response => response.text())
+    .then(data => {
+        modal_surname.textContent = newsurName;
+        btn_first_surname.style.display= "inline-table";
+        btn_second_surname.style.display="none";
+        modal_surname.style.display = "inline-table";
+        form_surname.style.display = "none";
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+
+
+
+
+
+
+    var btn_first_username = document.getElementById("username_update");
+    var btn_second_username = document.getElementById("Upadet_button_username");
+    var modal_username = document.getElementById("current_username");
+    var form_username = document.getElementById("new_username");
+    btn_first_username.onclick = function() {
+        btn_first_username.style.display= "none";
+        btn_second_username.style.display="initial";
+        modal_username.style.display = "none";
+        form_username.style.display = "initial";
+    }
+    btn_second_username.onclick = function() {
+    var newusername = form_username.value;
+    fetch('/update_username', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newusername }),
+    })
+    .then(response => response.text())
+    .then(data => {
+        modal_username.textContent = newusername;
+        btn_first_username.style.display= "inline-table";
+        btn_second_username.style.display="none";
+        modal_username.style.display = "inline-table";
+        form_username.style.display = "none";
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+
+
+
+
+
+
+    var btn_first_email = document.getElementById("email_update");
+    var btn_second_email = document.getElementById("Upadet_button_email");
+    var modal_email = document.getElementById("current_email");
+    var form_email = document.getElementById("new_email");
+    btn_first_email.onclick = function() {
+        btn_first_email.style.display= "none";
+        btn_second_email.style.display="initial";
+        modal_email.style.display = "none";
+        form_email.style.display = "initial";
+    }
+
+    btn_second_email.onclick = function() {
+    var newemail = form_email.value;
+    fetch('/update_email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newemail }),
+    })
+    .then(response => response.text())
+    .then(data => {
+        modal_email.textContent = newemail;
+        btn_first_email.style.display= "inline-table";
+        btn_second_email.style.display="none";
+        modal_email.style.display = "inline-table";
+        form_email.style.display = "none";
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+    var btn_first_p_num = document.getElementById("p_num_update");
+    var btn_second_p_num = document.getElementById("Upadet_button_p_num");
+    var modal_p_num = document.getElementById("current_p_num");
+    var form_p_num = document.getElementById("new_p_num");
+
+    btn_first_p_num.onclick = function() {
+        btn_first_p_num.style.display= "none";
+        btn_second_p_num.style.display="initial";
+        modal_p_num.style.display = "none";
+        form_p_num.style.display = "initial";
+    }
+
+    btn_second_p_num.onclick = function() {
+    var newp_num = form_p_num.value;
+    fetch('/update_p_num', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newp_num }),
+    })
+    .then(response => response.text())
+    .then(data => {
+        modal_p_num.textContent = newp_num;
+        btn_first_p_num.style.display= "inline-table";
+        btn_second_p_num.style.display="none";
+        modal_p_num.style.display = "inline-table";
+        form_p_num.style.display = "none";
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+var btn_first_adress = document.getElementById("adress_update");
+var btn_second_adress = document.getElementById("Upadet_button_adress");
+var modal_adress = document.getElementById("current_adress");
+var form_adress = document.getElementById("new_adress");
+
+btn_first_adress.onclick = function() {
+    btn_first_adress.style.display= "none";
+    btn_second_adress.style.display="initial";
+    modal_adress.style.display = "none";
+    form_adress.style.display = "initial";
+}
+
+
+btn_second_adress.onclick = function() {
+    var newadress = form_adress.value;
+    fetch('/update_adress', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newadress }),
+    })
+    .then(response => response.text())
+    .then(data => {
+        modal_adress.textContent = newadress;
+        btn_first_adress.style.display= "inline-table";
+        btn_second_adress.style.display="none";
+        modal_adress.style.display = "inline-table";
+        form_adress.style.display = "none";
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+var btn_first_hospital_name = document.getElementById("hospital_name_update");
+var btn_second_hospital_name = document.getElementById("Upadet_button_hospital_name");
+var modal_hospital_name = document.getElementById("current_hospital_name");
+var form_hospital_name = document.getElementById("new_hospital_name");
+
+btn_first_hospital_name.onclick = function() {
+    btn_first_hospital_name.style.display= "none";
+    btn_second_hospital_name.style.display="initial";
+    modal_hospital_name.style.display = "none";
+    form_hospital_name.style.display = "initial";
+}
+
+btn_second_hospital_name.onclick = function() {
+    var newhospital_name = form_hospital_name.value;
+    fetch('/update_hospital_name', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newhospital_name }),
+    })
+    .then(response => response.text())
+    .then(data => {
+        modal_hospital_name.textContent = newhospital_name;
+        btn_first_hospital_name.style.display= "inline-table";
+        btn_second_hospital_name.style.display="none";
+        modal_hospital_name.style.display = "inline-table";
+        form_hospital_name.style.display = "none";
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+    }
+
+
+
+
+
+
+</script>
+
+{% endblock %}

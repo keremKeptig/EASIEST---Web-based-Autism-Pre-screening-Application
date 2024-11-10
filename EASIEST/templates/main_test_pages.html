@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=" crossorigin="anonymous" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webgazer/1.0.0/webgazer.min.js"></script>
+    <script async type="text/javascript" src="../static/webgazer.js"></script>
+
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EASIEST</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        #fullscreen-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 30px;
+    background-color: white;
+    color: blue;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    border: 3px solid black;
+}
+
+         .message-container {
+            border: 7px solid ;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+
+        #main-message {
+            font-size: 36px;
+            text-align: center;
+            color: crimson;
+            font-weight: bold;
+        }
+
+        #sub-message {
+            font-size: 18px;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #bottom-right-btn {
+            padding: 50px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: white;
+            color: blue;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            border: 3px solid black;
+            display: none;
+        }
+
+        :fullscreen #bottom-right-btn {
+            display: block;
+        }
+
+        .center-container {
+            text-align: center;
+        }
+
+    #coordinates {
+        position: fixed;
+        bottom: 20px;
+        text-align: center;
+        right: 20px;
+        background-color: white;
+        padding: 10px;
+        border: 1px solid black;
+    }
+
+
+
+    </style>
+</head>
+<body LANG="en-US" LINK="#0000ff" DIR="LTR" id="testImage" data-id="{{ id }}">
+
+    <div class="center-container">
+        <img id="myImage" src="/static/images/attention.jpg" alt="Test Image">
+    </div>
+    <div class="message-container">
+        <!-- Messages for the user -->
+            <div id="main-message">
+                PLEASE WAIT 7-10 SECONDS UNTIL EYE-TRACKING ACTIVATES
+            </div>
+            <div id="sub-message">
+                * Do not move your head ! <br>
+                * Listen to the tasks given by the staff next to you <br>
+                * Enter fullscreen mode, and start.
+            </div>
+    </div>
+
+    <button id="fullscreen-btn" onclick="toggleFullScreen()">Go Fullscreen</button>
+    <button id="bottom-right-btn" value="">Next Question</button>
+
+
+    <script>
+        window.imageSizes = [];  // array to store the sizes of the images.
+        window.testID = -1; // -1 because this the test is not started yet
+        function toggleFullScreen() {
+            const doc = document.documentElement;
+            const isFullscreen = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+
+            // to remove the user message
+            var messageContainers = document.querySelector('.message-container');
+            messageContainers.remove();
+
+            if (!isFullscreen) {
+                if (doc.requestFullscreen) {
+                    doc.requestFullscreen();
+                } else if (doc.mozRequestFullScreen) { // Firefox
+                    doc.mozRequestFullScreen();
+                } else if (doc.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    doc.webkitRequestFullscreen();
+                } else if (doc.msRequestFullscreen) { // IE/Edge
+                    doc.msRequestFullscreen();
+                }
+
+                const img = document.getElementById('myImage');
+                //Loads the image 'APPLE.png'
+                img.src = '/static/images/APPLE.png';
+                // calculates the apple.png width and height, and adds into imageSizes array
+                img.onload = function() {
+                  window.imageSizes[0] = [this.width, this.height];
+                }
+
+                // Hide the fullscreen button after going fullscreen
+                document.getElementById('fullscreen-btn').style.display = 'none';
+                // we are calculating the new image size according to formula
+                // first, we are finding the ratio that current window height divided by first image height
+                azalma_orani = (window.innerHeight/window.imageSizes[0][1])
+                // multiply with the original image height with decreasing ratio that we found
+                const newHeight = window.imageSizes[0][1] * azalma_orani;
+                // and assign it to new height
+                img.style.height = `${newHeight}px`;
+
+                // we need also some parameters to calculate metrics
+                // Therefore, we keep the decreasing ratio and test id also for x padding
+                window.azalma_orani = azalma_orani;
+                window.testID = 0;
+                window.widthRatio = ((window.innerWidth-document.getElementById('myImage').width))/2;
+                // loaded the new calculated image
+                img.src = "/static/images/APPLE.png";
+
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            //const images = ['/static/images/APPLE.png', '/static/images/AVG.png', '/static/images/BABYLON.png', '/static/images/BBC.png', '/static/images/GODADDY.png', '/static/images/YAHOO.png'];
+        const images = ['/static/images/APPLE.png', '/static/images/BABYLON.png','/static/images/AVG.png','/static/images/GODADDY.png','/static/images/BBC.png'];
+
+            let currentImageIndex = 0;
+
+            const img = document.getElementById('myImage');
+
+            for (let i = 0; i < images.length; i++) {
+                const img = new Image();
+                img.src = images[i]; // image path
+                img.onload = function() { // load the image to get height and width
+                    window.imageSizes[i] = [this.width, this.height];
+                };
+            }
+            // fetching the next button
+            const button = document.getElementById('bottom-right-btn');
+
+            button.addEventListener('click', function() {
+                // already showed the apple png and next button clicked ,so we will show next png
+                currentImageIndex++;
+                window.testID = currentImageIndex;
+                if (currentImageIndex < images.length) {
+                    // Show the next image, and again calculating the new image size according to decreasing ratio
+                    // that we already calculated
+                    const newHeight = window.imageSizes[currentImageIndex][1] * azalma_orani;
+                    img.style.height = `${newHeight}px`;
+                    // loaded the new calculated image
+                    img.src = images[currentImageIndex];
+                    button.textContent = "Next Question";
+                    // last button
+                    if (currentImageIndex === images.length - 1) {
+                        button.textContent = "Finish";
+
+                    }
+                } else {
+
+                    // If all images are finished, redirect done endpoint
+                    window.location.href = "/done";
+                }
+
+                    });
+        });
+    </script>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+    integrity="sha256-KsRuvuRtUVvobe66OFtOQfjP8WA2SzYsmm4VPfMnxms=" crossorigin="anonymous"></script>
+
+
+  <script src="../static/js/main.js"></script>
+    <script src="../static/js/calibration.js"></script>
+    <script src="../static/js/precision_calculation.js"></script>
+    <script src="../static/js/precision_store_points.js"></script>
+</body>
+</html>

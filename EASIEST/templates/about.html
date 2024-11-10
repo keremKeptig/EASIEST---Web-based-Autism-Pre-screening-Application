@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+    #about-purpose {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        line-height: 1.6;
+        margin: 50px auto;
+        max-width: 800px;
+    }
+    h1 {
+        text-align: center;  /* Başlığı ortala */
+        color: #0077CC;      /* Açık mavi renk kodu */
+        margin-left: auto;
+
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div>
+    <h1 class="text-capitalize mb-5 text-lg">What We Do</h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="service-img1 mb-5 mb-lg-0">
+            <img src="../static/images/about.jpg" alt="" class="img-fluid">
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="service-info ">
+            <h3 class="text-md mb-4 mt-2">
+                Cutting-edge technology
+            </h3>
+            <p id="transcription">In response to these challenges, our innovative project introduces a web application named EASIEST.<br> This application harnesses gaze-tracking technology to streamline the detection of autism in adults. <br>The primary aim is to enhance the quality of life for individuals with autism and their families by offering <br>a user-friendly and easily accessible tool for the screening process. Unlike traditional diagnostic methods, <br>EASIEST seeks to significantly reduce both the time and cost associated with the initial screening for <br>Autism Spectrum Disorder. The web application achieves this by collecting data on eye movements and <br>behavior using a basic computer camera. Subsequently, this data is analyzed to identify potential signs of autism.</p>
+        </div>
+    </div>
+</div>
+
+<p></p>
+
+
+<div class="instructors_developers">
+    <h3 class="text-md mb-4 mt-2 h3-middle">Our Supervisors</h3>
+    <div class="row">
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <img src="static/images/YelizYesilada.png" class="rounded-circle" alt="">
+                        <h5 class="mt-3 mb-1"><a href="https://ncc.metu.edu.tr/yeliz-ye%C5%9Filada-yilmaz">Yeliz Yesilada Yilmaz</a> </h5>
+                        <p class="m-0">Assoc. Prof. Dr.</p>
+                        <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <img src="static/images/SukruEraslan.png" class="rounded-circle" alt="" href="https://www.ncc.metu.edu.tr/%C5%9F%C3%BCkr%C3%BC-eraslan">
+                        <h5 class="mt-3 mb-1"><a href="https://www.ncc.metu.edu.tr/%C5%9F%C3%BCkr%C3%BC-eraslan">Sükrü Eraslan</a></h5>
+                        <p class="m-0">Instr. Dr.</p>
+                        <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3 class="text-md mb-4 mt-2 h3-middle">Our Developers</h3>
+    <div class="row">
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <img src="static/images/DaniilBelousov.png" class="rounded-circle" alt="">
+                        <h5 class="mt-3 mb-1"><a href="https://www.linkedin.com/in/daniil-belousov-37457a229/">Daniil Belousov</a></h5>
+                        <p class="m-0">Developer</p>
+                        <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <img src="static/images/FurkanDuman.png" class="rounded-circle" alt="">
+                        <h5 class="mt-3 mb-1"><a href="https://www.linkedin.com/in/furkan-duman0/">Furkan Duman</a></h5>
+                        <p class="m-0">Developer</p>
+                        <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <img src="static/images/KeremKeptig.png" class="rounded-circle" alt="">
+                        <h5 class="mt-3 mb-1"><a href="https://www.linkedin.com/in/kerem-kepti%C4%9F/">Kerem Keptig</a></h5>
+                        <p class="m-0">Developer</p>
+                        <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <img src="static/images/BarisAydinay.png" class="rounded-circle" alt="">
+                        <h5 class="mt-3 mb-1"><a href="https://www.linkedin.com/in/baris-aydinay/">Baris Aydinay</a></h5>
+                        <p class="m-0">Developer</p>
+                        <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

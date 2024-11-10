@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Doctor Register</title>
+{% endblock %}
+
+
+{% block body %}
+    <div class="register-container">
+        <h1>Doctor Register</h1>
+        <form>
+          <input type="text" placeholder="Name" required>
+          <input type="text" placeholder="Surname" required>
+          <input type="text" placeholder="Username" required>
+          <input type="email" placeholder="Email" required>
+          <input type="text" placeholder="Tel. Number" required>
+          <input type="text" placeholder="Address" required>
+          <input type="text" placeholder="Hospital Name" required>
+          <input type="password" placeholder="Password" required>
+          <input type="password" placeholder="Confirm Password" required>
+        </form>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">* Please Upload Your Certificate Below!</label>
+            <input class="form-control" type="file" id="formFile" placeholder="Upload Certificate">
+        </div>
+
+        <div class="registration-button">
+            <button id="registration-confirm" name="confirm-button">Confirm</button>
+            <button id="registration-delete"name="delete-button">Delete</button>
+        </div>
+    </div>
+    <div id="alertContainer"></div>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+{% endblock %}
+
+
+
+

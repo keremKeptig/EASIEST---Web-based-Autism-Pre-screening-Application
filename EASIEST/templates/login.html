@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+    <div class = "login-container">
+        <form method="POST" action="">
+            {{form.hidden_tag()}}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Login In</legend>
+                <div class = form-group">
+                    {{form.Email.label(class="form-control-label")}}
+
+                    {% if form.Email.errors %}
+                        {{ form.Email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.Email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.Email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class = form-group">
+                    {{form.Password.label(class="form-control-label")}}
+
+                    {% if form.Password.errors %}
+                        {{ form.Password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.Password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.Password(class="form-control form-control-lg") }}
+                    {% endif %}
+
+                </div>
+                <div class="form-check">
+                    {{ form.Remember(class="form-check-input") }}
+                    {{ form.Remember.label(class="form-check-label") }}
+                </div>
+            </fieldset>
+            <div class = form-group">
+                {{form.Submit(class="btn btn-main-2 btn-icon btn-round-full")}}
+            </div>
+            <small class="text-muted ml-2">
+                <a href="#">Forgot Password?</a>
+            </small>
+        </form>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Do not have an account?<a class="ml-2" href="/dashboard.html">Sign Up</a>
+        </small>
+    </div>
+{% endblock %}

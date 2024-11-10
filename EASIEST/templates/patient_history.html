@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container" id="patient_history_container">
+    <h1>Patients Information</h1>
+    <table>
+        <tr>
+            <td><b>Name:</b></td>
+            <td>{{ patient.name }}</td>
+        </tr>
+        <tr>
+            <td><b>Surname:</b></td>
+            <td>{{ patient.surname }}</td>
+        </tr>
+        <tr>
+            <td><b>Phone Number:</b></td>
+            <td>{{ patient.phonenum }}</td>
+        </tr>
+        <tr>
+            <td><b>Tests Taken:</b></td>
+            <td>{{ quantity }}</td>
+        </tr>
+    </table>
+
+    <h1>Patients Tests</h1>
+    <p class="info-message">Please be aware:</p>
+    <p class="info-message">The 1st model's accuracy is 70%</p>
+    <p class="info-message">The 2nd model's accuracy is 90%</p>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Test ID</th>
+            <th>Accuracy 1st</th>
+            <th>Result 1st</th>
+            <th>Result 2nd</th>
+        </tr>
+        {% for test in tests %}
+        <tr>
+            <td>{{ test.date.strftime("%d/%m/%Y") }}</td>
+            <td>{{ test.id }}</td>
+            <td>{{ test.Accuracy }}</td>
+            {% if test.result  == 0 %}
+                <td>Not ASD</td>
+            {% elif test.result  == 1 %}
+                <td>ASD</td>
+            {% else %}
+                <td>Not tested</td>
+            {% endif %}
+            {% if test.Second_Result  == 0 %}
+                <td>Not ASD</td>
+            {% elif test.Second_Result  == 1 %}
+                <td>ASD</td>
+            {% else %}
+                <td>Not tested</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

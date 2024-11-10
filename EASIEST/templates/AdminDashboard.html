@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+  <table class="patients_table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Hospital Name</th>
+                <th>Validated</th>
+                <th>Operation</th>
+            </tr>
+        </thead>
+        <tbody class="table-hover">
+            {% for doctor in doctors %}
+                <tr>
+                    <td>{{ doctor.id }}</td>
+                    <td>{{ doctor.name }}</td>
+                    <td>{{ doctor.surname }}</td>
+                    <td>{{ doctor.phonenum }}</td>
+                    <td>{{ doctor.email }}</td>
+                    <td>{{ doctor.adress}}</td>
+                    <td>{{ doctor.hospital_name}}</td>
+                    {% if doctor.IsValidated == 0 %}
+                        <td>False</td>
+                    {% else %}
+                        <td>True</td>
+                    {% endif %}
+                    <td>
+                        <a href="/validateDoctor/{{doctor.id}}" id="createLink">Approve</a>
+                        <br>
+                        <a href="/UnvalidateDoctor/{{doctor.id}}" id="deleteLink">Remove Validation</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

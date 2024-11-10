@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+
+
+{% endblock %}
+
+
+
+{% block body %}
+
+<section class="banner">
+	<div class="container">
+		<div class="row1">
+			<div class="col-lg-6 col-md-12 col-xl-7">
+				<div class="block">
+					<div class="divider mb-3"></div>
+					<span class="text-uppercase text-sm letter-spacing ">Autism Spectrum Prescreening</span>
+					<h1 class="mb-3 mt-3">Your most trusted health partner</h1>
+					<p class="mb-4 pr-5">EASIEST stands as a promising solution that  addresses the limitations of traditional methods.</p>
+					<p class="mb-4 pr-5">We provide a more efficient and accessible approach to autism screening for adults.</p>
+
+                    <div class="btn-container ">
+						<a href="{{ url_for('about') }}" target="_blank" class="btn btn-main-2 btn-icon btn-round-full">About Us<i class="icofont-simple-right ml-2  "></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="section about">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5">
+                <div class="process-block pl-4">
+                    <span class="text-uppercase text-sm letter-spacing">Why choose us</span>
+                    <h2 class="mb-5 mt-5">We help you  make work easier</h2>
+                    <p class="mb-5">We understand how hard and time-consuming it is!</p>
+                    <p class="mb-5">Let us help you on your way.</p>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="icon-block text-center mb-5 mb-lg-0">
+                            <i class="ti-light-bulb"></i>
+                            <h3>Fast analysis</h3>
+                            <p>A quick solution to autism spectrum disorder.</p>
+                            <p>Will not take more than half an hour</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="icon-block text-center mt-5 mb-5 mb-lg-0">
+                            <i class="ti-panel"></i>
+                            <h3>Easily Accessible</h3>
+                            <p>A product that could be reached from anywhere.</p>
+                            <p>You only have to have a pc with camera</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="icon-block text-center mt-5 mb-5 mb-lg-0">
+                            <i class="ti-search"></i>
+                            <h3>Cost-Effective</h3>
+                            <p>More affordable than traditional diagnostic .</p>
+                            <p>Expensive equipment is replaced with basic cameras.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="icon-block text-center mt-5">
+                            <i class="ti-rocket"></i>
+                            <h3>User-Friendly Interface</h3>
+                            <p>Designed for individuals without specialized training.</p>
+                            <p>Provides clear instructions and intuitive navigation for all users.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
